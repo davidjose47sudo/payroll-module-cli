@@ -4,6 +4,8 @@
  */
 package app;
 
+import java.util.Scanner;
+
 /**
  *
  * @author ADSI
@@ -14,9 +16,30 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Hola mundo");
-        System.out.println("Hola mundo martin");
-        System.out.println("Hola mundo diego");
-    }
+        String options = "saludo";
+        Scanner leer = new Scanner(System.in);
+        System.out.println("ingrese una  accion");
+        options = leer.nextLine();
+        switch (options) {
+            case "saludo":
+                System.out.println("Hola mundo david");
+                // secuencia de sentencias.
+                break;
+            case "despedida":
+                System.out.println("chao martin");
+                // secuencia de sentencias.
+                break;
+            case "hablar":
+                System.out.println("como estas diego?");
+                // secuencia de sentencias.
+                break;
+            default:
+                System.out.println("Hola mundo");
+
+        }
+
     
+       
+    }
+
 }
