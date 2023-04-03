@@ -24,6 +24,7 @@ public class App {
         boolean menu = true;
 
         while (menu) {
+            clr();
             System.out.println("Menu");
             System.out.println("ACCIONES:");
             System.out.println("1)agregar nomina de empleado administrativo");
@@ -47,6 +48,9 @@ public class App {
                     break;
                 default:
                     System.out.println("opcion no valida");
+                    System.out.print("Presiona Enter para continuar...");
+                    leer.nextLine(); // Espera a que el usuario presione Enter
+                    leer.nextLine(); // Espera a que el usuario presione Enter
             }
 
         }
@@ -55,6 +59,7 @@ public class App {
 
     static void imprimir(String name, String lastname, int clocks, double salary, int clocks_ex, Double allpayEx,
             double salud, double pension, double arl, Double Descuentos, Double pay) {
+        clr();
         System.out.println("*************************************************");
         System.out.println("**************** VOLANTE DE PAGO ****************");
         System.out.println("*************************************************");
@@ -75,38 +80,41 @@ public class App {
         System.out.println("*************************************************");
         System.out.println("************ FIN DEL VOLANTE DE PAGO ************");
         System.out.println("*************************************************");
+        System.out.print("Presiona Enter para continuar...");
+    leer.nextLine(); // Espera a que el usuario presione Enter
+    leer.nextLine(); // Espera a que el usuario presione Enter
     }
 
     static void information(int options) {
-        System.out.println("nombre del trabajador");
+        System.out.println("nombre del trabajador:");
         leer.nextLine();
         name = leer.nextLine();
-        System.out.println("apellido del trabajador");
-        lastname = leer.nextLine();
+        System.out.println("apellido del trabajador:");
+        lastname = leer.nextLine();    
+      clr();
         if (options == 1) {
             do {
-                System.out.println("numero de trabajo:");
+                System.out.println("titulo de trabajo(ingrese el numero):");
                 System.out.println("1)Auxiliar Administrativo");
                 job = leer.nextInt();
                 System.out.println("horas trabajadas (mes)");
                 clockswork = leer.nextInt();
                 System.out.println("horas extras trabajadas (mes)");
                 clockworkex = leer.nextInt();
-                clr();
             } while (job == 0);
         }
         if (options == 2) {
             do {
-                System.out.println("numnero de trabajo:");
+                System.out.println("titulo de trabajo(ingrese el numero):");
                 System.out.println("1)Conductor");
                 System.out.println("2)Oficios Generales");
                 System.out.println("3)Vigilancia");
                 job = leer.nextInt();
                 System.out.println("horas trabajadas (mes)");
                 clockswork = leer.nextInt();
-                clr();
             } while (job == 0);
         }
+         
         htex = clock_expay(options, clockworkex);
         salarybruto = Salary(options, clockswork);
         if (clockworkex == 0) {
@@ -119,12 +127,15 @@ public class App {
             pension = pension(options, salarybruto + htex);
             arl = ARL(options, job, salarybruto + htex);
         }
-        clr();
+       
+         
+       
         salaryneto = salarybruto - salud - pension + htex;
         sp = salud + pension;
         imprimir(name, lastname, clockswork, salarybruto, clockworkex, htex, salud, pension, arl, sp,
                 salaryneto);
         cleanVariable();
+        clr();
     }
 
     static int Salary(int typejob, int clockwork) {
@@ -159,6 +170,9 @@ public class App {
             return clocks * 40000;
         }
     }
+    static void clr() {
+        for (int i = 0; i < 50; ++i) System.out.println();
+    }
 
     static int clock_expay(int type_job, int clocks) {
         if (type_job == 1) {
@@ -167,14 +181,7 @@ public class App {
         return 0;
     }
 
-    static void clr() {
-        try {
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
-        } catch (Exception e) {
-            /* No hacer nada */
-        }
-    }
+    
 
     static double hearthand(int type_job, double salary) {
         if (type_job == 1) {
