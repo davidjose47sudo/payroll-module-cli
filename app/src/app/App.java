@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  *
@@ -20,10 +21,10 @@ public class App {
 
     static NumberFormat formatea = NumberFormat.getCurrencyInstance((new Locale("es", "CO")));
     static Scanner leer = new Scanner(System.in);
-    static String name, lastname, type_job, Work;
+    static String name, lastname, type_job, Work, nametable = "Table";
     static int clockswork = 0, clockworkex = 0, job = 0;
-    static double salud = 0, pension = 0, salarybruto = 0, arl = 0, salaryneto = 0, htex = 0, sp = 0;
-    static protected int options;
+    static double health = 0, pension = 0, salarybruto = 0, arl = 0, salaryneto = 0, htex = 0, sp = 0;
+    static protected int options, save;
 
     /**
      * @param args the command line arguments
@@ -38,7 +39,8 @@ public class App {
             System.out.println("1)agregar nomina de empleado administrativo");
             System.out.println("2)agregar nomina de empleado operativo");
             System.out.println("3)Imprimir Nomina");
-            System.out.println("4)Salir");
+            System.out.println("4)crear archivo para Nomina");
+            System.out.println("5)Salir");
             System.out.println("Numero de accion:");
             App.options = leer.nextInt();
             switch (options) {
@@ -49,9 +51,12 @@ public class App {
                     information(options);
                     break;
                 case 3:
-                    registorprint();
+                    Logprint();
                     break;
                 case 4:
+                    createTable();
+                    break;
+                case 5:
                     menu = false;
                     break;
                 default:
@@ -59,10 +64,16 @@ public class App {
                     pause();
             }
         }
+        clr();
+        System.out.print("-------------------\n");
+        System.out.print("|See you next time|\n");
+        System.out.print("-------------------\n");
+        leer.nextLine();
+        pause();
     }
 
     static void imprimir(String name, String lastname, int clocks, String salary, int clocks_ex, String allpayEx,
-            String salud, String pension, String arl, String Descuentos, String pay) {
+            String health, String pension, String arl, String Descuentos, String pay) {
         clr();
         System.out.println("*************************************************");
         System.out.println("**************** VOLANTE DE PAGO ****************");
@@ -79,11 +90,11 @@ public class App {
         System.out.println("*************** DESCUENTOS DE LEY ***************");
         System.out.println("*************************************************");
         if (App.options == 1) {
-            System.out.println("Salud(4%): " + salud);
+            System.out.println("salud(4%): " + health);
             System.out.println("Pensión(4%): " + pension);
             System.out.println("ARL(0,522%): " + arl);
         } else {
-            System.out.println("Salud: " + salud);
+            System.out.println("salud: " + health);
             System.out.println("Pensión: " + pension);
             System.out.println("ARL: " + arl);
         }
@@ -91,8 +102,17 @@ public class App {
         System.out.println("Total a pagar: " + pay);
         System.out.println("*************************************************");
         System.out.println("************ FIN DEL VOLANTE DE PAGO ************");
-        System.out.println("*************************************************");
-        Save(name, lastname, clocks, salary, clocks_ex, allpayEx, salud, pension, arl, Descuentos, pay);
+        System.out.println("*************************************************\n");
+        System.out.println("Quieres Guardar el Registro?");
+        System.out.println("1)si\n2)no");
+        save = leer.nextInt();
+        if (save == 1) {
+            if (nametable == "Table") {
+                System.out.println("No Hay archivo Creado, Por favor crearlo");
+                createTable();
+            }
+            Save(name, lastname, clocks, salary, clocks_ex, allpayEx, health, pension, arl, Descuentos, pay);
+        }
         pause();
     }
 
@@ -155,19 +175,19 @@ public class App {
         htex = clock_expay(options, clockworkex);
         salarybruto = Salary(options, clockswork);
         if (clockworkex == 0) {
-            salud = hearthand(options, salarybruto);
+            health = hearthand(options, salarybruto);
             pension = pension(options, salarybruto);
             arl = ARL(options, job, salarybruto);
         }
         if (clockworkex > 0) {
-            salud = hearthand(options, salarybruto + htex);
+            health = hearthand(options, salarybruto + htex);
             pension = pension(options, salarybruto + htex);
             arl = ARL(options, job, salarybruto + htex);
         }
-        salaryneto = salarybruto - salud - pension - arl + htex;
-        sp = salud + pension;
+        salaryneto = salarybruto - health - pension - arl + htex;
+        sp = health + pension;
         imprimir(name, lastname, clockswork, formatea.format(salarybruto), clockworkex, formatea.format(htex),
-                formatea.format(salud), formatea.format(pension), formatea.format(arl), formatea.format(sp),
+                formatea.format(health), formatea.format(pension), formatea.format(arl), formatea.format(sp),
                 formatea.format(salaryneto));
         cleanVariable();
         clr();
@@ -212,6 +232,32 @@ public class App {
         }
     }
 
+    static void createTable() {
+        System.out.print("escriba el nombre del archivo de nomina(no utilizar '/'):");
+        leer.nextLine();
+        nametable = leer.nextLine();
+        FileWriter file;
+        try {
+            file = new FileWriter(nametable + ".txt", true);
+            PrintWriter out = new PrintWriter(file);
+            out.printf("%-25s%-15s%-35s%-15s%-20s%-15s%-15s%-15s%-15s%-15s%-20s%n", "Nombre", "Tipo", "Cargo",
+                    "HT",
+                    "Salario", "HE", "TPHE", "Salud",
+                    "Pension", "ARL", "Total a pagar\n");
+            out.write(
+                    "----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.print("archivo Creado\n");
+        System.out.print("todo registro que se cree apartir de ahora se guardara en este archivo:" + nametable + "\n");
+        System.out.print("para guardar en otro archivo tiene que crear un archivo nuevo por el menu\n");
+
+        pause();
+        clr();
+    }
+
     static int clock_expay(int type_job, int clocks) {
         if (type_job == 1) {
             return clocks * 25000;
@@ -234,7 +280,7 @@ public class App {
         App.clockswork = 0;
         App.clockworkex = 0;
         App.job = 0;
-        App.salud = 0;
+        App.health = 0;
         App.pension = 0;
         App.salarybruto = 0;
         App.arl = 0;
@@ -245,7 +291,6 @@ public class App {
 
     static void pause() {
         System.out.print("Presiona Enter para continuar...");
-        leer.nextLine(); // Espera a que el usuario presione Enter
         leer.nextLine(); // Espera a que el usuario presione Enter
     }
 
@@ -258,18 +303,19 @@ public class App {
     }
 
     static void Save(String name, String lastname, int clocks, String salary, int clocks_ex, String allpayEx,
-            String salud, String pension, String arl, String Descuentos, String pay) {
+            String health, String pension, String arl, String Descuentos, String pay) {
 
         try {
-            FileWriter escritor = new FileWriter("table.txt", true);
+            FileWriter escritor = new FileWriter(nametable + ".txt", true);
             BufferedWriter bw = new BufferedWriter(escritor);
+            String formattedData = String.format("%-25s%-15s%-35s%-15s%-20s%-15s%-15s%-15s%-15s%-20s%-15s%n",
+                    name + " " +
+                            lastname,
+                    App.Work, type_job, clocks, salary, clocks_ex, allpayEx,
+                    health, pension, arl, pay);
+            bw.write(formattedData);
             bw.write(
-                    "| " + name + " " + lastname + " | " + App.Work + " | " + type_job + " | " + clocks + " | " + salary
-                            + " | "
-                            + clocks_ex + " | " + allpayEx + " | " + salud + " | " + pension + " | " + arl + " | " + pay
-                            + " |\n");
-            bw.write(
-                    "| ------------------------- | -------------- | ----------------------- | --- | ------- | --- | ------ | ------ | ------- | ---- | ------------- |\n");
+                    "----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
             bw.close();
             System.out.println("Se ha guardado la información en el archivo.");
         } catch (IOException e) {
@@ -278,18 +324,24 @@ public class App {
 
     }
 
-    static void registorprint() {
-        try {
-            FileReader lector = new FileReader("table.txt");
-            int caracter;
-            while ((caracter = lector.read()) != -1) {
-                System.out.print((char) caracter);
+    static void Logprint() {
+        if (nametable != "Table") {
+            try {
+                FileReader lector = new FileReader(nametable + ".txt");
+                int caracter;
+                while ((caracter = lector.read()) != -1) {
+                    System.out.print((char) caracter);
+                }
+                leer.nextLine();
+                lector.close();
+            } catch (IOException e) {
+                System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
             }
-            pause();
-            lector.close();
-        } catch (IOException e) {
-            System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
+        } else {
+            System.out.println("Vacio");
+            leer.nextLine();
         }
+        pause();
     }
 
 }
