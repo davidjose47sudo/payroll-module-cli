@@ -39,8 +39,9 @@ public class App {
             System.out.println("1)agregar nomina de empleado administrativo");
             System.out.println("2)agregar nomina de empleado operativo");
             System.out.println("3)Imprimir Nomina");
-            System.out.println("4)crear archivo para Nomina");
-            System.out.println("5)Salir");
+            System.out.println("4)insertar un archivo de Nomina");
+            System.out.println("5)crear archivo para Nomina");
+            System.out.println("6)Salir");
             System.out.println("Numero de accion:");
             App.options = leer.nextInt();
             switch (options) {
@@ -54,9 +55,12 @@ public class App {
                     Logprint();
                     break;
                 case 4:
-                    createTable();
+                    SearchFile();
                     break;
                 case 5:
+                    createTable();
+                    break;
+                case 6:
                     menu = false;
                     break;
                 default:
@@ -107,7 +111,7 @@ public class App {
         System.out.println("1)si\n2)no");
         save = leer.nextInt();
         if (save == 1) {
-            if (nametable == "Table") {
+            if (nametable == "Table" || nametable == "") {
                 System.out.println("No Hay archivo Creado, Por favor crearlo");
                 createTable();
             }
@@ -243,9 +247,9 @@ public class App {
             out.printf("%-25s%-15s%-35s%-15s%-20s%-15s%-15s%-15s%-15s%-15s%-20s%n", "Nombre", "Tipo", "Cargo",
                     "HT",
                     "Salario", "HE", "TPHE", "Salud",
-                    "Pension", "ARL", "Total a pagar\n");
+                    "Pension", "ARL", "Total a pagar");
             out.write(
-                    "----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+                    "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -315,7 +319,7 @@ public class App {
                     health, pension, arl, pay);
             bw.write(formattedData);
             bw.write(
-                    "----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+                    "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
             bw.close();
             System.out.println("Se ha guardado la información en el archivo.");
         } catch (IOException e) {
@@ -344,4 +348,18 @@ public class App {
         pause();
     }
 
+    static void SearchFile() {
+        System.out.print("ingrese el nombre de un archivo de nomina existente: ");
+        App.nametable = leer.nextLine();
+        App.nametable = leer.nextLine();
+        try {
+            FileReader lector = new FileReader(nametable + ".txt");
+            lector.close();
+            pause();
+        } catch (IOException e) {
+            System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
+            App.nametable = "";
+            pause();
+        }
+    }
 }
