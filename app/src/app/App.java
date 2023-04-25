@@ -29,6 +29,12 @@ public class App {
     /**
      * @param args the command line arguments
      */
+    /**
+     * This is a Java program that displays a menu with options to add employee
+     * payroll information,
+     * print payroll, insert a payroll file, create a payroll file, and exit the
+     * program.
+     */
     public static void main(String[] args) {
         boolean menu = true;
 
@@ -76,6 +82,40 @@ public class App {
         pause();
     }
 
+    /**
+     * This function prints out a payroll statement and gives the option to save the
+     * information to a
+     * table.
+     * 
+     * @param name       A string representing the name of the employee.
+     * @param lastname   The parameter "lastname" is a String variable that
+     *                   represents the last name of an
+     *                   employee.
+     * @param clocks     The number of hours worked in a month.
+     * @param salary     The gross salary of the employee.
+     * @param clocks_ex  The number of extra hours worked by the employee.
+     * @param allpayEx   The total payment for extra hours worked.
+     * @param health     The health discount percentage applied to the employee's
+     *                   salary as part of the
+     *                   mandatory deductions required by law.
+     * @param pension    The amount of money deducted from an employee's salary as a
+     *                   contribution to a pension
+     *                   plan or retirement savings account.
+     * @param arl        ARL stands for "Administradora de Riesgos Laborales" which
+     *                   is a mandatory insurance in
+     *                   Colombia that covers work-related accidents and illnesses.
+     *                   In the context of the code, it refers to
+     *                   the percentage of the employee's salary that is deducted
+     *                   for this insurance.
+     * @param Descuentos "Descuentos" is a String variable that holds the total
+     *                   amount of deductions from
+     *                   an employee's salary, including health insurance, pension,
+     *                   and ARL (Accidents at Work and
+     *                   Occupational Diseases) contributions.
+     * @param pay        The total amount of money to be paid to the employee after
+     *                   all deductions and additions
+     *                   have been made.
+     */
     static void imprimir(String name, String lastname, int clocks, String salary, int clocks_ex, String allpayEx,
             String health, String pension, String arl, String Descuentos, String pay) {
         clr();
@@ -120,6 +160,16 @@ public class App {
         pause();
     }
 
+    /**
+     * The function "information" takes user input for a worker's name, job title,
+     * hours worked, and
+     * calculates their gross and net salary, as well as deductions for health,
+     * pension, and ARL.
+     * 
+     * @param options An integer value that determines the type of job and the
+     *                calculations to be performed
+     *                for the employee's salary.
+     */
     static void information(int options) {
         clr();
         System.out.print("nombre del trabajador:");
@@ -144,7 +194,6 @@ public class App {
                         break;
                 }
             }
-
             System.out.println("horas trabajadas (mes)");
             clockswork = leer.nextInt();
             System.out.println("horas extras trabajadas (mes)");
@@ -197,6 +246,25 @@ public class App {
         clr();
     }
 
+    /**
+     * The function calculates the ARL (Average Risk Level) based on the type of
+     * job, job position, and
+     * salary.
+     * 
+     * @param type_job an integer representing the type of job (1 for
+     *                 administrative, 2 for operative)
+     * @param job      The job parameter is an integer that represents the specific
+     *                 job position within the
+     *                 "Operativo" category. It can have one of three values: 1 for
+     *                 "Oficios Generales", 2 for
+     *                 "Conductor", and 3 for "Vigilancia".
+     * @param salary   The salary of the employee.
+     * @return a double value which represents the ARL (Administrative Risk
+     *         Insurance) contribution
+     *         based on the type of job, job position and salary. The value returned
+     *         depends on the conditions
+     *         specified in the if-else statements.
+     */
     static double ARL(int type_job, int job, double salary) {
         if (type_job == 1) {
             App.Work = "Administrativo";
@@ -220,6 +288,22 @@ public class App {
         }
     }
 
+    /**
+     * The function calculates the salary based on the type of job and the number of
+     * clocks worked.
+     * 
+     * @param type_job An integer representing the type of job. It can be either 1
+     *                 or 2.
+     * @param clocks   The number of hours worked by the employee.
+     * @return The function `Salary` returns the salary of an employee based on
+     *         their job type and the
+     *         number of clocks they have worked. If the job type is 1, the function
+     *         returns the salary calculated
+     *         by multiplying the number of clocks by 20000. If the job type is 2,
+     *         the function returns the salary
+     *         calculated by multiplying the number of clocks by 40000. If the job
+     *         type is
+     */
     static int Salary(int type_job, int clocks) {
         if (type_job == 1) {
             return clocks * 20000;
@@ -230,12 +314,19 @@ public class App {
         return 0;
     }
 
+    /**
+     * The function clears the console by printing 50 empty lines in Java.
+     */
     static void clr() {
         for (int i = 0; i < 50; ++i) {
             System.out.println();
         }
     }
 
+    /**
+     * This function creates a table in a text file for storing employee payroll
+     * information.
+     */
     static void createTable() {
         System.out.print("escriba el nombre del archivo de nomina(no utilizar '/'):");
         leer.nextLine();
@@ -257,11 +348,23 @@ public class App {
         System.out.print("archivo Creado\n");
         System.out.print("todo registro que se cree apartir de ahora se guardara en este archivo:" + nametable + "\n");
         System.out.print("para guardar en otro archivo tiene que crear un archivo nuevo por el menu\n");
-
         pause();
         clr();
     }
 
+    /**
+     * The function calculates the total payment for a job based on the number of
+     * clocks and the type of
+     * job.
+     * 
+     * @param type_job An integer representing the type of job. It is expected to be
+     *                 either 1 or any
+     *                 other integer value.
+     * @param clocks   The number of clock cycles required for a particular job.
+     * @return If the `type_job` parameter is equal to 1, the function returns the
+     *         product of `clocks`
+     *         and 25000. Otherwise, it returns 0.
+     */
     static int clock_expay(int type_job, int clocks) {
         if (type_job == 1) {
             return clocks * 25000;
@@ -269,6 +372,22 @@ public class App {
         return 0;
     }
 
+    /**
+     * The function calculates the amount of heart-hand bonus based on the type of
+     * job and salary.
+     * 
+     * @param type_job An integer representing the type of job. If it is equal to 1,
+     *                 it means the job is
+     *                 a full-time job. If it is not equal to 1, it means the job is
+     *                 a part-time job.
+     * @param salary   The salary parameter is a double data type representing the
+     *                 amount of money earned
+     *                 by an employee.
+     * @return The function `hearthand` is returning a double value which is either
+     *         4% of the salary if
+     *         the `type_job` is 1, or 12.5% of 40% of the salary if the `type_job`
+     *         is not 1.
+     */
     static double hearthand(int type_job, double salary) {
         if (type_job == 1) {
             return 0.04 * salary;
@@ -277,6 +396,10 @@ public class App {
         }
     }
 
+    /**
+     * The function cleans/reset all the variables in the App class to their default
+     * values.
+     */
     static void cleanVariable() {
         App.name = "";
         App.lastname = "";
@@ -293,11 +416,33 @@ public class App {
         App.sp = 0;
     }
 
+    /**
+     * The function "pause" prompts the user to press Enter and waits for the input
+     * before continuing.
+     */
     static void pause() {
         System.out.print("Presiona Enter para continuar...");
         leer.nextLine(); // Espera a que el usuario presione Enter
     }
 
+    /**
+     * The function calculates the pension amount based on the type of job and
+     * salary.
+     * 
+     * @param type_job An integer representing the type of job. If it is equal to 1,
+     *                 it means the job is a
+     *                 government job. If it is any other integer, it means the job
+     *                 is not a government job.
+     * @param salary   The salary is a double data type and represents the amount of
+     *                 money earned by an
+     *                 employee. It is one of the parameters passed to the pension
+     *                 function.
+     * @return The function `pension` returns a double value which represents the
+     *         pension amount based on
+     *         the type of job and salary provided as input parameters. If the type
+     *         of job is 1, it returns 4% of
+     *         the salary, otherwise it returns 12.5% of 40% of the salary.
+     */
     static double pension(int type_job, double salary) {
         if (type_job == 1) {
             return 0.04 * salary;
@@ -306,9 +451,45 @@ public class App {
         }
     }
 
+    /**
+     * The function saves employee information to a text file in a formatted manner.
+     * 
+     * @param name       The first name of the employee.
+     * @param lastname   The last name of the employee.
+     * @param clocks     It is likely referring to the number of hours worked by an
+     *                   employee, as it is being
+     *                   passed as an integer parameter in the Save() method along
+     *                   with other employee information such as
+     *                   name, salary, and deductions.
+     * @param salary     The salary parameter is a String that represents the base
+     *                   salary of an employee.
+     * @param clocks_ex  The parameter "clocks_ex" is an integer that represents the
+     *                   number of extra hours
+     *                   worked by an employee.
+     * @param allpayEx   It is a String variable that represents the total amount of
+     *                   extra pay received by an
+     *                   employee, including overtime and bonuses.
+     * @param health     The health parameter is a String that represents the amount
+     *                   of money deducted from an
+     *                   employee's salary for health insurance.
+     * @param pension    The parameter "pension" is a String variable that
+     *                   represents the amount of money
+     *                   deducted from an employee's salary for their pension plan.
+     * @param arl        ARL stands for "Administradora de Riesgos Laborales" which
+     *                   is a mandatory insurance in
+     *                   Colombia that covers work-related accidents and illnesses.
+     *                   It is one of the deductions that may be
+     *                   made from an employee's salary.
+     * @param Descuentos "Descuentos" is a parameter that represents the total
+     *                   amount of deductions made
+     *                   from an employee's salary, such as taxes, social security
+     *                   contributions, and other withholdings.
+     * @param pay        The parameter "pay" is a String variable that represents
+     *                   the total payment received by an
+     *                   employee, including all the deductions and bonuses.
+     */
     static void Save(String name, String lastname, int clocks, String salary, int clocks_ex, String allpayEx,
             String health, String pension, String arl, String Descuentos, String pay) {
-
         try {
             FileWriter escritor = new FileWriter(nametable + ".txt", true);
             BufferedWriter bw = new BufferedWriter(escritor);
@@ -325,9 +506,13 @@ public class App {
         } catch (IOException e) {
             System.out.println("Ha ocurrido un error al guardar el archivo: " + e.getMessage());
         }
-
     }
 
+    /**
+     * This function reads and prints the contents of a text file with a given name,
+     * or prints "Vacio"
+     * if the name is "Table".
+     */
     static void Logprint() {
         if (nametable != "Table") {
             try {
@@ -348,6 +533,11 @@ public class App {
         pause();
     }
 
+    /**
+     * This function prompts the user to enter the name of an existing payroll file
+     * and attempts to read
+     * it, displaying an error message if it fails.
+     */
     static void SearchFile() {
         System.out.print("ingrese el nombre de un archivo de nomina existente: ");
         App.nametable = leer.nextLine();
