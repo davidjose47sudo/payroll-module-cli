@@ -4,6 +4,8 @@
  */
 package app;
 
+// The above code is importing necessary Java libraries for formatting numbers and reading/writing
+// files. It is also declaring a scanner object to read user input. The pound signs ("
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Scanner;
@@ -19,6 +21,7 @@ import java.io.PrintWriter;
  */
 public class App {
 
+    // The above code is declaring and initializing variables and objects in Java.
     static NumberFormat formatea = NumberFormat.getCurrencyInstance((new Locale("es", "CO")));
     static Scanner leer = new Scanner(System.in);
     static String name, lastname, type_job, Work, nametable = "Table";
