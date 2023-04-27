@@ -26,14 +26,14 @@ public class App {
     static Scanner leer = new Scanner(System.in);
     static String name, lastname, type_job, Work, nametable = "Table";
     static int clockswork = 0, clockworkex = 0, job = 0;
-    static double health = 0, pension = 0, salarybruto = 0, arl = 0, salaryneto = 0, htex = 0, sp = 0;
+    static double health = 0, pension = 0, salarybruto = 0, arl = 0, salaryneto = 0, htex = 0, HEPE = 0;
     static protected int options, save;
 
     /**
      * @param args the command line arguments
      */
     /**
-     * This is a Java program that displays a menu with options to add employee
+     * This is a Java program that diHEPElays a menu with options to add employee
      * payroll information,
      * print payroll, insert a payroll file, create a payroll file, and exit the
      * program.
@@ -205,8 +205,8 @@ public class App {
         if (options == 2) {
             while (job == 0) {
                 System.out.println("titulo de trabajo(ingrese el numero):");
-                System.out.println("1)Conductor");
-                System.out.println("2)Oficios Generales");
+                System.out.println("1)Oficios Generales");
+                System.out.println("2)Conductor");
                 System.out.println("3)Vigilancia");
                 job = leer.nextInt();
                 switch (job) {
@@ -241,9 +241,9 @@ public class App {
             arl = ARL(options, job, salarybruto + htex);
         }
         salaryneto = salarybruto - health - pension - arl + htex;
-        sp = health + pension;
+        HEPE = health + pension;
         imprimir(name, lastname, clockswork, formatea.format(salarybruto), clockworkex, formatea.format(htex),
-                formatea.format(health), formatea.format(pension), formatea.format(arl), formatea.format(sp),
+                formatea.format(health), formatea.format(pension), formatea.format(arl), formatea.format(HEPE),
                 formatea.format(salaryneto));
         cleanVariable();
         clr();
@@ -256,7 +256,8 @@ public class App {
      * 
      * @param type_job an integer representing the type of job (1 for
      *                 administrative, 2 for operative)
-     * @param job      The job parameter is an integer that represents the specific
+     * @param job      The job parameter is an integer that represents the
+     *                 HEPEecific
      *                 job position within the
      *                 "Operativo" category. It can have one of three values: 1 for
      *                 "Oficios Generales", 2 for
@@ -266,7 +267,7 @@ public class App {
      *         Insurance) contribution
      *         based on the type of job, job position and salary. The value returned
      *         depends on the conditions
-     *         specified in the if-else statements.
+     *         HEPEecified in the if-else statements.
      */
     static double ARL(int type_job, int job, double salary) {
         if (type_job == 1) {
@@ -348,6 +349,7 @@ public class App {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        clr();
         System.out.print("archivo Creado\n");
         System.out.print("todo registro que se cree apartir de ahora se guardara en este archivo:" + nametable + "\n");
         System.out.print("para guardar en otro archivo tiene que crear un archivo nuevo por el menu\n");
@@ -416,7 +418,7 @@ public class App {
         App.arl = 0;
         App.salaryneto = 0;
         App.htex = 0;
-        App.sp = 0;
+        App.HEPE = 0;
     }
 
     /**
@@ -425,7 +427,7 @@ public class App {
      */
     static void pause() {
         System.out.print("Presiona Enter para continuar...");
-        leer.nextLine(); // Espera a que el usuario presione Enter
+        leer.nextLine(); // EHEPEera a que el usuario presione Enter
     }
 
     /**
@@ -494,9 +496,9 @@ public class App {
     static void Save(String name, String lastname, int clocks, String salary, int clocks_ex, String allpayEx,
             String health, String pension, String arl, String Descuentos, String pay) {
         try {
-            FileWriter escritor = new FileWriter(nametable + ".txt", true);
-            BufferedWriter bw = new BufferedWriter(escritor);
-            String formattedData = String.format("%-25s%-15s%-35s%-15s%-20s%-15s%-15s%-15s%-15s%-20s%-15s%n",
+            FileWriter write = new FileWriter(nametable + ".txt", true);
+            BufferedWriter bw = new BufferedWriter(write);
+            String formattedData = String.format("%-25s%-15s%-35s%-15s%-20s%-15s%-15s%-15s%-15s%-15s%-20s%n",
                     name + " " +
                             lastname,
                     App.Work, type_job, clocks, salary, clocks_ex, allpayEx,
@@ -519,13 +521,13 @@ public class App {
     static void Logprint() {
         if (nametable != "Table") {
             try {
-                FileReader lector = new FileReader(nametable + ".txt");
+                FileReader reader = new FileReader(nametable + ".txt");
                 int caracter;
-                while ((caracter = lector.read()) != -1) {
+                while ((caracter = reader.read()) != -1) {
                     System.out.print((char) caracter);
                 }
                 leer.nextLine();
-                lector.close();
+                reader.close();
             } catch (IOException e) {
                 System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
             }
@@ -539,15 +541,15 @@ public class App {
     /**
      * This function prompts the user to enter the name of an existing payroll file
      * and attempts to read
-     * it, displaying an error message if it fails.
+     * it, diHEPElaying an error message if it fails.
      */
     static void SearchFile() {
         System.out.print("ingrese el nombre de un archivo de nomina existente: ");
         App.nametable = leer.nextLine();
         App.nametable = leer.nextLine();
         try {
-            FileReader lector = new FileReader(nametable + ".txt");
-            lector.close();
+            FileReader reader = new FileReader(nametable + ".txt");
+            reader.close();
             pause();
         } catch (IOException e) {
             System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
