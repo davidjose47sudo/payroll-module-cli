@@ -119,7 +119,7 @@ public class App {
      *                   all deductions and additions
      *                   have been made.
      */
-    static void imprimir(String name, String lastname, int clocks, String salary, int clocks_ex, String allpayEx,
+    static void print(String name, String lastname, int clocks, String salary, int clocks_ex, String allpayEx,
             String health, String pension, String arl, String Descuentos, String pay) {
         clr();
         System.out.println("*************************************************");
@@ -211,10 +211,10 @@ public class App {
                 job = leer.nextInt();
                 switch (job) {
                     case 1:
-                        clockswork = 160;
+                        clockswork = 100;
                         break;
                     case 2:
-                        clockswork = 100;
+                        clockswork = 160;
                         break;
                     case 3:
                         clockswork = 336;
@@ -242,7 +242,7 @@ public class App {
         }
         salaryneto = salarybruto - health - pension - arl + htex;
         HEPE = health + pension;
-        imprimir(name, lastname, clockswork, formatea.format(salarybruto), clockworkex, formatea.format(htex),
+        print(name, lastname, clockswork, formatea.format(salarybruto), clockworkex, formatea.format(htex),
                 formatea.format(health), formatea.format(pension), formatea.format(arl), formatea.format(HEPE),
                 formatea.format(salaryneto));
         cleanVariable();
