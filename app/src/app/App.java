@@ -452,7 +452,7 @@ public class App {
         if (type_job == 1) {
             return 0.04 * salary;
         } else {
-            return 0.125 * (salary * 0.4);
+            return 0.16 * (salary * 0.4);
         }
     }
 
