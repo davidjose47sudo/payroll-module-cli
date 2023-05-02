@@ -26,14 +26,14 @@ public class App {
     static Scanner leer = new Scanner(System.in);
     static String name, lastname, type_job, Work, nametable = "Table";
     static int clockswork = 0, clockworkex = 0, job = 0;
-    static double health = 0, pension = 0, salarybruto = 0, arl = 0, salaryneto = 0, htex = 0, HEPE = 0;
+    static double health = 0, pension = 0, salarybruto = 0, arl = 0, salaryneto = 0, overtimePay = 0, hpp = 0;
     static protected int options, save;
 
     /**
      * @param args the command line arguments
      */
     /**
-     * This is a Java program that diHEPElays a menu with options to add employee
+     * This is a Java program that displays a menu with options to add employee
      * payroll information,
      * print payroll, insert a payroll file, create a payroll file, and exit the
      * program.
@@ -228,7 +228,7 @@ public class App {
                 }
             }
         }
-        htex = clock_expay(options, clockworkex);
+        overtimePay = clock_expay(options, clockworkex);
         salarybruto = Salary(options, clockswork);
         if (clockworkex == 0) {
             health = hearthand(options, salarybruto);
@@ -236,14 +236,14 @@ public class App {
             arl = ARL(options, job, salarybruto);
         }
         if (clockworkex > 0) {
-            health = hearthand(options, salarybruto + htex);
-            pension = pension(options, salarybruto + htex);
-            arl = ARL(options, job, salarybruto + htex);
+            health = hearthand(options, salarybruto + overtimePay);
+            pension = pension(options, salarybruto + overtimePay);
+            arl = ARL(options, job, salarybruto + overtimePay);
         }
-        salaryneto = salarybruto - health - pension - arl + htex;
-        HEPE = health + pension;
-        print(name, lastname, clockswork, formatea.format(salarybruto), clockworkex, formatea.format(htex),
-                formatea.format(health), formatea.format(pension), formatea.format(arl), formatea.format(HEPE),
+        salaryneto = salarybruto - health - pension - arl + overtimePay;
+        hpp = health + pension;
+        print(name, lastname, clockswork, formatea.format(salarybruto), clockworkex, formatea.format(overtimePay),
+                formatea.format(health), formatea.format(pension), formatea.format(arl), formatea.format(hpp),
                 formatea.format(salaryneto));
         cleanVariable();
         clr();
@@ -257,7 +257,7 @@ public class App {
      * @param type_job an integer representing the type of job (1 for
      *                 administrative, 2 for operative)
      * @param job      The job parameter is an integer that represents the
-     *                 HEPEecific
+     *                 especific
      *                 job position within the
      *                 "Operativo" category. It can have one of three values: 1 for
      *                 "Oficios Generales", 2 for
@@ -267,7 +267,7 @@ public class App {
      *         Insurance) contribution
      *         based on the type of job, job position and salary. The value returned
      *         depends on the conditions
-     *         HEPEecified in the if-else statements.
+     *         especified in the if-else statements.
      */
     static double ARL(int type_job, int job, double salary) {
         if (type_job == 1) {
@@ -417,8 +417,8 @@ public class App {
         App.salarybruto = 0;
         App.arl = 0;
         App.salaryneto = 0;
-        App.htex = 0;
-        App.HEPE = 0;
+        App.overtimePay = 0;
+        App.hpp = 0;
     }
 
     /**
@@ -427,7 +427,7 @@ public class App {
      */
     static void pause() {
         System.out.print("Presiona Enter para continuar...");
-        leer.nextLine(); // EHEPEera a que el usuario presione Enter
+        leer.nextLine(); // Espera a que el usuario presione Enter
     }
 
     /**
@@ -541,7 +541,7 @@ public class App {
     /**
      * This function prompts the user to enter the name of an existing payroll file
      * and attempts to read
-     * it, diHEPElaying an error message if it fails.
+     * it, displaying an error message if it fails.
      */
     static void SearchFile() {
         System.out.print("ingrese el nombre de un archivo de nomina existente: ");
