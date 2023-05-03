@@ -153,14 +153,69 @@ public class App {
         System.out.println("Quieres Guardar el Registro?");
         System.out.println("1)si\n2)no");
         save = leer.nextInt();
-        if (save == 1) {
-            if (nametable == "Table" || nametable == "") {
-                System.out.println("No Hay archivo Creado, Por favor crearlo");
-                createTable();
+        clr();
+        boolean menu = true;
+        while (menu) {
+            switch (save) {
+                case 1:
+                    if (nametable == "Table" || nametable == "") {
+                        System.out.println(
+                                "No Hay archivo Creado, Por favor crearlo o Insertelo");
+                        System.out.println("quiere insertar un archivo?");
+                        System.out.println("1)si\n2)no");
+                        save = leer.nextInt();
+                        if (save != 1) {
+                            createTable();
+                            Save(name, lastname, clocks, salary, clocks_ex, allpayEx, health, pension, arl, Descuentos,
+                                    pay);
+                        } else {
+                            while (true) {
+                                int temp = SearchFile();
+                                if (temp == 1) {
+                                    Save(name, lastname, clocks, salary, clocks_ex, allpayEx, health, pension, arl,
+                                            Descuentos,
+                                            pay);
+                                    menu = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 2:
+                    System.out.println("estas seguro de no crear el registro?");
+                    System.out.println("1)si\n2)no");
+                    save = leer.nextInt();
+                    if (save == 2) {
+                        System.out.println(
+                                "No Hay archivo Creado, Por favor crearlo o Insertelo");
+                        System.out.println("quiere insertar un archivo?");
+                        System.out.println("1)si\n2)no");
+                        save = leer.nextInt();
+                        if (save != 1) {
+                            createTable();
+                            Save(name, lastname, clocks, salary, clocks_ex, allpayEx, health, pension, arl, Descuentos,
+                                    pay);
+                        } else {
+                            while (true) {
+                                int temp = SearchFile();
+                                if (temp == 1) {
+                                    Save(name, lastname, clocks, salary, clocks_ex, allpayEx, health, pension, arl,
+                                            Descuentos,
+                                            pay);
+                                    menu = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    System.out.println("opcion invalida");
+                    break;
             }
-            Save(name, lastname, clocks, salary, clocks_ex, allpayEx, health, pension, arl, Descuentos, pay);
+            pause();
         }
-        pause();
     }
 
     /**
@@ -222,6 +277,7 @@ public class App {
                     default:
                         job = 0;
                         System.out.println("titulo de trabajo desconocido:");
+                        pause();
                         pause();
                         clr();
                         break;
@@ -543,18 +599,22 @@ public class App {
      * and attempts to read
      * it, displaying an error message if it fails.
      */
-    static void SearchFile() {
+    static int SearchFile() {
         System.out.print("ingrese el nombre de un archivo de nomina existente: ");
         App.nametable = leer.nextLine();
         App.nametable = leer.nextLine();
         try {
             FileReader reader = new FileReader(nametable + ".txt");
             reader.close();
+            System.out.print("archivo insertado ");
+            System.out.print("todo registro que se cree apartir de ahora se guardara en este archivo:" + nametable + "\n");
             pause();
+            return 1;
         } catch (IOException e) {
-            System.out.println("Ha ocurrido un error al leer el archivo: " + e.getMessage());
+            System.out.println("Ha ocurrido un error al leer el archivo o no existe");
             App.nametable = "";
             pause();
+            return 0;
         }
     }
 }
