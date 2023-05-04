@@ -150,12 +150,12 @@ public class App {
         System.out.println("*************************************************");
         System.out.println("************ FIN DEL VOLANTE DE PAGO ************");
         System.out.println("*************************************************\n");
-        System.out.println("Quieres Guardar el Registro?");
-        System.out.println("1)si\n2)no");
-        save = leer.nextInt();
-        clr();
         boolean menu = true;
         while (menu) {
+            System.out.println("Quieres Guardar el Registro?");
+            System.out.println("1)si\n2)no");
+            save = leer.nextInt();
+            clr();
             switch (save) {
                 case 1:
                     if (nametable == "Table" || nametable == "") {
@@ -607,7 +607,8 @@ public class App {
             FileReader reader = new FileReader(nametable + ".txt");
             reader.close();
             System.out.print("archivo insertado ");
-            System.out.print("todo registro que se cree apartir de ahora se guardara en este archivo:" + nametable + "\n");
+            System.out.print(
+                    "todo registro que se cree apartir de ahora se guardara en este archivo:" + nametable + "\n");
             pause();
             return 1;
         } catch (IOException e) {
